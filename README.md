@@ -1,6 +1,4 @@
-# cust\*m Tab
-
-<img src="https://github.com/philppplik/custmTab/blob/main/custmTab-linelogo.png?raw=true">
+#<div align="center"><img src="custmTab-linelogo.png"></div>
 
 > Your tab. Your rules. — Zero-friction custom new tab for Chrome.
 
