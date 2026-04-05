@@ -1,5 +1,7 @@
 # cust\*m Tab
 
+<img src="https://github.com/philppplik/custmTab/blob/main/custmTab-linelogo.png?raw=true">
+
 > Your tab. Your rules. — Zero-friction custom new tab for Chrome.
 
 A Chrome MV3 extension that fixes every critical bug in "Custom New Tab URL" and competing extensions.
