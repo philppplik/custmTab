@@ -1,4 +1,4 @@
-<div align="center"><img style="height: 100%;" src="wl_custmTab_project_cover.png"></div>
+<div align="center"><img style="height: 100%;" src="custmTab_project_cover.png"></div>
 
 > Your tab. Your rules. — Zero-friction custom new tab for Chrome.
 
