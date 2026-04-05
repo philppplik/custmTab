@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cust*m Tab — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-header__brand">
+      <span class="app-header__asterisk">✱</span>
+      <h1 class="app-header__title">cust*m Tab</h1>
+    </div>
+    <div class="app-header__controls">
+      <span id="status-badge" class="status-badge status-badge--inactive">● Unconfigured</span>
+      <button id="theme-toggle" class="icon-btn" aria-label="Toggle color theme" title="Toggle theme">
+        <!-- icon set by JS -->
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Onboarding banner — shown on first install only -->
+    <div id="onboarding-banner" class="banner banner--welcome" hidden>
+      <div class="banner__icon">👋</div>
+      <div class="banner__body">
+        <strong>Welcome to cust*m Tab</strong>
+        <p>Enter any URL below — that page opens every time you open a new tab. Done in 30 seconds.</p>
+      </div>
+      <button id="btn-dismiss-onboarding" class="banner__dismiss" aria-label="Dismiss">✕</button>
+    </div>
+
+    <!-- Main settings card -->
+    <section class="card" aria-label="URL settings">
+      <div class="field">
+        <label class="field__label" for="url-input">Your New Tab URL</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="url-input"
+            class="url-input"
+            placeholder="https://notion.so  or  file:///Users/you/page.html"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <span id="url-status-icon" class="url-status-icon" aria-live="polite" aria-label="URL validation status"></span>
+        </div>
+        <p id="url-hint" class="field__hint" aria-live="polite"></p>
+      </div>
+
+      <div class="toggles">
+        <label class="toggle-row">
+          <input type="checkbox" id="toggle-mask-url" class="toggle-checkbox">
+          <span class="toggle-label">
+            Hide target URL in address bar
+            <span class="toggle-hint">Uses an iframe — some sites may block this</span>
+          </span>
+        </label>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="toggle-preload" class="toggle-checkbox">
+          <span class="toggle-label">
+            Preload page every 10 minutes
+            <span class="toggle-hint">Reduces load time for JS-heavy pages</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="card__footer">
+        <button id="btn-save" class="btn btn--primary">Save</button>
+        <span id="save-feedback" class="save-feedback" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Local file guide card -->
+    <section class="card card--secondary" aria-label="Local file guide">
+      <details class="details-block">
+        <summary class="details-block__summary">
+          <span>Using a local file?</span>
+          <span class="details-block__caret">›</span>
+        </summary>
+        <div class="details-block__body">
+          <ol class="guide-steps">
+            <li>Open <a href="chrome://extensions" target="_blank" rel="noopener">chrome://extensions</a></li>
+            <li>Find <strong>cust*m Tab</strong> → click <em>Details</em></li>
+            <li>Enable <em>"Allow access to file URLs"</em></li>
+            <li>Enter a path like <code>file:///Users/you/dashboard.html</code></li>
+          </ol>
+          <p class="guide-note">Note: Chrome restricts <code>file://</code> access for security. This is a one-time setup.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>

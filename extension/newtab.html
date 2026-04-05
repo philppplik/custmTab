@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Tab</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <!-- P1: Invisible focus target — JS focuses this immediately to steal focus from Chrome's address bar -->
+    <button id="focus-trap" aria-hidden="true" tabindex="-1"></button>
+
+    <!-- Shown while settings are being read and the iframe is loading -->
+    <div id="loading-overlay">
+      <span class="loading-text">Loading&#8230;</span>
+    </div>
+
+    <!-- Shown when no targetUrl has been configured yet -->
+    <div id="setup-card" hidden>
+      <h1>Welcome to cust*m Tab</h1>
+      <p>Set a URL to load every time you open a new tab.</p>
+      <button id="btn-open-options">Open Settings</button>
+    </div>
+
+    <!-- Shown on any error (file access denied, iframe blocked, etc.) -->
+    <div id="error-card" hidden>
+      <h1>Something went wrong</h1>
+      <p id="error-message"></p>
+      <p id="error-detail" class="error-detail"></p>
+      <button id="btn-open-options-error">Open Settings</button>
+    </div>
+
+    <!-- P5/P6: Main content iframe — address bar stays on the extension URL, not the target URL -->
+    <iframe
+      id="content-frame"
+      title="Custom new tab content"
+    ></iframe>
+
+    <script src="newtab.js"></script>
+  </body>
+</html>

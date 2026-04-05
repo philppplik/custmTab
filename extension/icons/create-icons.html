@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cust*m Tab — Icon Generator</title>
+  <style>
+    body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; gap: 24px; background: #f5f5f5; }
+    h1 { font-size: 20px; margin: 0; }
+    p { color: #555; margin: 0; text-align: center; max-width: 440px; }
+    button { background: #6366f1; color: white; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; }
+    button:hover { background: #4f51d8; }
+    .previews { display: flex; gap: 16px; align-items: flex-end; }
+    canvas { border-radius: 20%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    #status { font-size: 14px; color: #16a34a; font-weight: 500; min-height: 20px; }
+  </style>
+</head>
+<body>
+  <h1>cust*m Tab — Icon Generator</h1>
+  <p>Click the button to generate all icon sizes and download them automatically. Place the downloaded files in the <code>icons/</code> folder.</p>
+  <div class="previews" id="previews"></div>
+  <button id="btn-generate">Generate &amp; Download Icons</button>
+  <p id="status"></p>
+
+  <script>
+    const SIZES = [16, 32, 48, 128];
+    const BG = '#1a1a1a';
+    const ACCENT = '#6366f1';
+
+    function drawIcon(canvas, size) {
+      canvas.width = canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const radius = size * 0.20;
+
+      // Rounded square background
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.arcTo(size, 0, size, size, radius);
+      ctx.arcTo(size, size, 0, size, radius);
+      ctx.arcTo(0, size, 0, 0, radius);
+      ctx.arcTo(0, 0, size, 0, radius);
+      ctx.closePath();
+      ctx.fillStyle = BG;
+      ctx.fill();
+
+      // Asterisk
+      ctx.fillStyle = ACCENT;
+      // Font size: ~68% of icon size for good visual weight
+      const fontSize = Math.round(size * 0.68);
+      ctx.font = `900 ${fontSize}px system-ui, -apple-system, Helvetica, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // Slight downward push for optical centering of *
+      ctx.fillText('*', size / 2, size * 0.54);
+
+      return canvas;
+    }
+
+    function showPreviews() {
+      const container = document.getElementById('previews');
+      container.innerHTML = '';
+      SIZES.forEach(size => {
+        const canvas = document.createElement('canvas');
+        drawIcon(canvas, size);
+        canvas.title = `${size}×${size}`;
+        canvas.style.width = Math.max(size, 32) + 'px';
+        canvas.style.height = Math.max(size, 32) + 'px';
+        canvas.style.imageRendering = size < 32 ? 'pixelated' : 'auto';
+        container.appendChild(canvas);
+      });
+    }
+
+    document.getElementById('btn-generate').addEventListener('click', () => {
+      const status = document.getElementById('status');
+      status.textContent = 'Generating…';
+      let downloaded = 0;
+      SIZES.forEach((size, i) => {
+        setTimeout(() => {
+          const canvas = document.createElement('canvas');
+          drawIcon(canvas, size);
+          canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `icon${size}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            downloaded++;
+            if (downloaded === SIZES.length) {
+              status.textContent = `✓ All ${SIZES.length} icons downloaded! Move them to the icons/ folder.`;
+            }
+          }, 'image/png');
+        }, i * 100); // stagger downloads to avoid browser blocking
+      });
+    });
+
+    // Show previews immediately on load
+    showPreviews();
+  </script>
+</body>
+</html>
